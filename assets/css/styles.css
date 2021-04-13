@@ -1,0 +1,48 @@
+.main {
+  margin-left: 11%;
+  margin-right: 11%;
+  min-width:600px;
+  font-size: 18px;
+}
+
+.main-title {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 25px;
+  margin-left: 11%;
+  margin-right: 11%;
+  text-align: center;
+}
+
+.main-nav-container {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.main-nav-container li {
+  display: inline;
+  margin-left: 10px;
+}
+
+.main-nav-container a {
+  text-align: center;
+  text-decoration: none;
+}
+
+.contents {
+  margin-top: 5px;
+}
+
+.center-text {
+  text-align: center;
+
+}
+
+.fixed-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
