@@ -6,44 +6,43 @@
 # time bound : 1
 
 bool a;
-[0, 10] x1;
+[0, 10] x;
 {
     mode:
         a = false;
     inv:
-        x1 > 0;
+        x > 1;
     flow:
-        d/dt[x1] = (-0.5 * sqrt(2 * 9.806) * sqrt(x1)) / 8 ;
+        d/dt[x] = (-0.01 * 4.43 * sqrt(x))  ;
     jump:
-        (x1 >= 5)  =>
-          (and (not a') (x1' = x1));
-        (x1 < 5) =>
-          (and a' (x1' = x1));
+        (x < 5) =>
+          (and a' (x' = x));
 
 }
 {
     mode:
         a = true;
     inv:
-        x1 < 8;
+        x < 8;
     flow:
-        d/dt[x1] = (5 - 0.5 * sqrt(2 * 9.806) * sqrt(x1)) / 8 ;
+        d/dt[x] = 0.8 - 0.01 * 4.43 * sqrt(x); 
     jump:
-        (x1 >= 5)  =>
-          (and (not a') (x1' = x1));
-        (x1 < 5) =>
-          (and a' (x1' = x1));
+        (x >= 2)  =>
+          (and (not a') (x' = x));
 }
 init:
-(and (a = true) (x1 <= 4 + 0.1) (x1 >= 4 - 0.1));
+(and (a = false) (4 <= x) (x <= 4.5));
 
 propositions:
-reachability = x1 >= 5.6 ;
+reachability = x >= 5.6 ;
+pa = a;
 
-
+#timebound 20
 goal:
-(<> [0.0, 50.0) reachability) ; # false
-((x1 > 3) R (2, 12] (~ a)); # true 
-([] [0.0, 30.0] ((x1 < 3) -> <> [0.0, 10.0] a)) ; # true
-(<> [4, 12] ((~ a) R [1, 12] x1 > 4)); # false
+<> [2, 4] x >2;
+[][0, 10](x < 2 -> <>[0, 10] pa);
+~pa U[2, 10] x < 2; 
+[][0, 10](<> [0,7] x < 3); 
+
+
 

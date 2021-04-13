@@ -6,11 +6,10 @@
 # It is also affected by each other's room
 # temperature.
 
-# const real xxx = 1;
 bool a;
-[-20, 100] x1;
+[10, 30] x1;
 bool b;
-[-20, 100] x2;
+[10, 30] x2;
 {
     mode:
         a = false;
@@ -22,12 +21,10 @@ bool b;
         d/dt[x1] = -0.4;
         d/dt[x2] = -0.6;
     jump:
-        (and (x1 > (((x1 + x2) / 2) + 0.5)) (x2 <= (((x1 + x2) / 2) + 0.5))) =>
+         x2 < 22 =>
           (and (a' = false) (b' = true) (x1' = x1) (x2' = x2));
-        (and (x1 <= ((x1 + x2) / 2)) (x2 > (((x1 + x2) / 2) + 0.5))) =>
+         x1 < 22 =>
           (and (a' = true) (b' = false) (x1' = x1) (x2' = x2));
-        (and (x1 <= ((x1 + x2) / 2)) (x2 <= ((x1 + x2) / 2))) =>
-          (and (a' = true) (b' = true) (x1' = x1) (x2' = x2));
 }
 {
     mode:
@@ -35,36 +32,31 @@ bool b;
         b = true;
     inv:
         x1 >= 19.5;
-        (x2 <= 21);
+        (x2 <= 24);
     flow:
         d/dt[x1] = -0.4;
         d/dt[x2] = 1;
     jump:
-        (and (x1 > (((x1 + x2) / 2) + 0.5)) (x2 > (((x1 + x2) / 2) + 0.5))) =>
-          (and (a' = false) (b' = false) (x1' = x1) (x2' = x2));
-        (and (x1 <= ((x1 + x2) / 2)) (x2 > (((x1 + x2) / 2) + 0.5))) =>
-          (and (a' = true) (b' = false) (x1' = x1) (x2' = x2));
-        (and (x1 <= ((x1 + x2) / 2)) (x2 <= ((x1 + x2) / 2))) =>
+        x1 < 22 =>
           (and (a' = true) (b' = true) (x1' = x1) (x2' = x2));
-
+        x2 > 20 =>
+          (and (a' = false) (b' = false) (x1' = x1) (x2' = x2));
 }
 {
     mode:
         a = true;
         b = false;
     inv:
-        x1 <= 21;
+        x1 <= 24;
         (x2 >= 19.5);
     flow:
         d/dt[x1] = 0.7;
         d/dt[x2] = -0.6;
     jump:
-        (and (x1 > (((x1 + x2) / 2) + 0.5)) ((x2 > ((x1 + x2) / 2) + 0.5))) =>
-          (and (a' = false) (b' = false) (x1' = x1) (x2' = x2));
-        (and (x1 > (((x1 + x2) / 2) + 0.5)) (x2 <= ((x1 + x2) / 2))) =>
-          (and (a' = false) (b' = true) (x1' = x1) (x2' = x2));
-        (and (x1 <= ((x1 + x2) / 2)) (x2 <= ((x1 + x2) / 2))) =>
+        x2 < 22 =>
           (and (a' = true) (b' = true) (x1' = x1) (x2' = x2));
+        x1 > 20 =>
+          (and (a' = false) (b' = false) (x1' = x1) (x2' = x2));
 
 }
 {
@@ -72,35 +64,31 @@ bool b;
         a = true;
         b = true;
     inv:
-        x1 <= 21;
-        (x2 <= 21);
+        x1 <= 24;
+        (x2 <= 24);
     flow:
         d/dt[x1] = 0.7;
         d/dt[x2] = 1;
     jump:
-        (and (x1 > (((x1 + x2) / 2) + 0.5)) ((x2 > ((x1 + x2) / 2) + 0.5))) =>
-          (and (a' = false) (b' = false) (x1' = x1) (x2' = x2));
-        (and (x1 > (((x1 + x2) / 2) + 0.5)) (x2 <= ((x1 + x2) / 2))) =>
+         x1 > 20 =>
           (and (a' = false) (b' = true) (x1' = x1) (x2' = x2));
-        (and (x1 <= ((x1 + x2) / 2)) (x2 > (((x1 + x2) / 2) + 0.5))) =>
+         x2 > 20  =>
           (and (a' = true) (b' = false) (x1' = x1) (x2' = x2));
 
 }
 
 
 init:
-(and (not(a)) not(b) (x1 <= 20 + 0.1) (x1 >= 20 - 0.1) (x2 <= 20 + 3.5) (x2 >= 20 + 3));
+(and not(a) not(b) (18 <= x1) (x1 <= 20) (22.5 <= x2) (x2 <= 23));
 
 propositions:
-reachability = x1 >= 21;
-p = x2 > 24 ;
-q = x1 < 22;
-r = x1 < 20;
-s = x2 > 19;
+pa = a;
+pb = b;
 
+#time bound 40
 goal:
-(<> [0.0, 40.0] p);  # false
-([] [10, 30] q); # true
-([] [0, 10] ((~ a) U [0, 15) r)); # false
-(<> (5, 30) (s R [0, 30] b)); # true
+(<>[2, 10] x2 > 20); 
+([] [0, 5] (x1 > 19 -> [] [2, 5) x1 < 24));  
+[] [0, 10] ((pa and pb) -> x1 > 21);
+(<> [0, 2] pb) R[0, 8] x1 > 21 ; 
 

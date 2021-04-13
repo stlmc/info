@@ -27,7 +27,7 @@
     <nav class="nav">
       <div class="nav-container">
 	<!--<a href="/info/">-->
-	<div class="nav-title">Efficient SMT-Based Model Checking for Signal Temporal Logic</div>
+	<div class="nav-title"><span style="font-size: 1.6em;">STLMC : STL Bounded Model Checker</span></div>
 	<!--</a>-->
 	<!--<ul>-->
 		<!--<li><a href="/info/demo" target="_blank">Demo</a></li>-->
@@ -38,47 +38,65 @@
 
     <main>
       <ul>
-  <li>
-    <h2 id="proof-of-lemmas--longer-report">Proof of Lemmas &amp; Longer Report </h2>
+
+    <p><span style="font-size:1.3em;">stlMC is a bounded model checking tool for signal temporal logic (STL) of hybrid system. 
+    The algorithm of the tool is refutationally complete for STL properties of bounded signal. 
+    It encodes STL bounded model checking problems as the reductions into the satisfiability of a first-order logic formula over the real numbers. 
+    The satisfiability of the resulting formula can be determined using existing SMT solvers such as Z3, Yices, and dReal3.
+    </span></p>
+
+    <h2 id="installation"><span style="font-size: 1.25em;">Installation </span></h2>
+    <p><span style="font-size:1.3em;">STLMC is provided as a python package. To install the tool, run the following instruction:</span></p>
+
+    <p style="border-left: 0.5em solid #E0CB52;padding: 0.5em;"><span style="font-size:1.2em;font-weight: bold">
+      pip install -i https://test.pypi.org/simple/ stlmc==0.1.0.dev4 </span></p>
+
+    <p><span style="font-size:1.3em;">The source code can be downloaded through the attached file 
+      [<a href="https://stlmc.github.io/info/assets/source.zip">source.zip</a>].</span></p>  
+
+    <h2 id="language"><span style="font-size: 1.25em;">Language </span></h2>
+    <p><span style="font-size:1.3em;">STLMC supports a language to specify hybrid automata and STL goals. <br>
+      Consider a thermostat controller to control the temperatures of a room.
+      If the temperature is low, the heater turns on, and if the temperature is high, the heater turns off. <br>
+
+      <img src="https://stlmc.github.io/info/assets/img/thermo_automata.png" width="480"style="margin-left: auto; margin-right: auto; display: block;"/>
+    
+      We can define the thermostat hybrid automaton as the following model file in STLMC.
+
+      <img src="https://stlmc.github.io/info/assets/img/code.png" width="680">
+
+      In this example, we check whether the temperature is greater than 19 and less than 25 for 20-time units (Refer line 21).</span></p>
+
+    <h2 id="usage"><span style="font-size: 1.25em;"> Usage </span></h2>
+    <p><span style="font-size:1.3em;"> To perform model checking of STL on the above model from bound 1 to 5 using dReal3, run the following command:</span></p>
+
+    <p style="border-left: 0.5em solid #E0CB52;padding: 0.5em;"><span style="font-size:1.2em;font-weight: bold">
+      ./stlmc -lower 1 -upper 5 -solver dreal thermostat.model </span></p>
+
+    <h2 id="benchmark-models"><span style="font-size: 1.25em;">Benchmark models </span></h2>
+    <p><span style="font-size:1.3em;">There are several benchmark models.
+    For each model, we consider three kinds of continuous dynamics: linear dynamics, polynomial dynamics, and ordinary differential equations (ODEs). You can download benchmark model files using the below link.</span></p>
     <ul>
-      <li><span style="font-size:1.3em;">The complete proofs of lemmas: [<a href="https://stlmc.github.io/info/assets/pdf/proofs.pdf">pdf</a>]</span></li>
-      <li><span style="font-size:1.3em;">A longer report (with the proofs and details of the experiments): [<a href="https://stlmc.github.io/info/assets/pdf/techrep.pdf">pdf</a>]</span></li>
-    </ul>
-  </li>
-  <li>
-    <h2 id="benchmark-models">Benchmark models </h2>
-    <p><span style="font-size:1.3em;">There are three kinds of continuous dynamics: linear dynamics, polynomial dynamics, and ordinary differential equations (ODEs). You can download the model file using the below link.</span></p>
-    <ul>
-      <li><span style="font-size: 1.3em;">Car: Linear [<a href="https://stlmc.github.io/info/assets/model/carLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/carPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/carOde.model">link</a>]</span></li>
-      <li><span style="font-size: 1.3em;">Thermostat: Linear [<a href="https://stlmc.github.io/info/assets/model/thermoLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/thermoPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/thermoOde.model">link</a>]</span></li>
-      <li><span style="font-size: 1.3em;">Watertank: Linear [<a href="https://stlmc.github.io/info/assets/model/waterLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/waterPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/waterOde.model">link</a>]</span></li>
-      <li><span style="font-size: 1.3em;">Railroad: Linear [<a href="https://stlmc.github.io/info/assets/model/railroadLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/railroadPoly.model">link</a>]</span></li>
-      <li><span style="font-size: 1.3em;">Airplain: Ode [<a href="https://stlmc.github.io/info/assets/model/airOde.model">link</a>]</span></li>
-      <li><span style="font-size: 1.3em;">Battery: Linear [<a href="https://stlmc.github.io/info/assets/model/batteryLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/batteryPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/batteryOde.model">link</a>]</span></li>
+      <li><span style="font-size: 1.3em;">Car: Control a car to follow another car. <br>
+        <div style="text-indent: 1.5em"> Linear [<a href="https://stlmc.github.io/info/assets/model/carLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/carPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/carOde.model">link</a>]</div></span></li>
+      <li><span style="font-size: 1.3em;">Thermostat: Control temperatures of two adjacent rooms. <br>
+        <div style="text-indent: 1.5em"> Linear [<a href="https://stlmc.github.io/info/assets/model/thermoLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/thermoPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/thermoOde.model">link</a>]</div></span></li>
+      <li><span style="font-size: 1.3em;">Watertank: Control water levels of two adjacent watertanks. <br>
+         <div style="text-indent: 1.5em"> Linear [<a href="https://stlmc.github.io/info/assets/model/waterLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/waterPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/waterOde.model">link</a>]</div></span></li>
+      <li><span style="font-size: 1.3em;">Battery: Control a load switching system between two batteries.<br>
+         <div style="text-indent: 1.5em">Linear [<a href="https://stlmc.github.io/info/assets/model/batteryLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/batteryPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/batteryOde.model">link</a>]</div></span></li>
+      <li><span style="font-size: 1.3em;">Railroad: Control a crossing bar based on distance from the train.
+         <div style="text-indent: 1.5em">Linear [<a href="https://stlmc.github.io/info/assets/model/railLinear.model">link</a>], Polynomial [<a href="https://stlmc.github.io/info/assets/model/railPoly.model">link</a>], Ode [<a href="https://stlmc.github.io/info/assets/model/railOde.model">link</a>]</div></span></li>
+
     </ul>
     <div style="height: 0.5em;"></div>
     <div style="font-size: 1.3em;">You can see dynamics and STL formulas for each model in the attached file. [<a href="https://stlmc.github.io/info/assets/pdf/models.pdf">models.pdf</a>]</div>
   </li>
   <li>
-    <h2 id="experimental-evaluation">Experimental Evaluation </h2>
-    <p><span style="font-size:1.3em;">For experimentally evaluation, we compare the performance of our algorithm with the previous algorithm using our tool stlmc STL Bounded Model Checker. We use above models for bounded model checking (Experiment 1) and STL formulas for STL satisfiability checking (Experiment 2). You can download STL formulas of Experiment 2 using the following links.</span>
-<span style="font-size: 1.3em;">[<a href="https://stlmc.github.io/info/assets/model/nested-1.model">nested-1.model</a>, <a href="https://stlmc.github.io/info/assets/model/nested-2.model">nested-2.model</a>, <a href="https://stlmc.github.io/info/assets/model/nested-3.model">nested-3.model</a>]</span></p>
-    <ul>
-      <li>
-        <div style="font-weight:bold; font-size:1.4em;">Installation</div>
-        <p><span style="font-size:1.3em;">stlMC [<a href="https://tinyurl.com/y6svh26e">artifact.zip</a>] can be executed on the TACAS’21 Artifact Evaluation VM [<a href="https://zenodo.org/record/4041464#.X59ci50zZqs">link</a>].<br /> For detail instructions, see <strong><em>Readme.txt</em></strong> file in the artifact.</span><br /></p>
-      </li>
-      <li>
-        <div style="font-weight:bold; font-size:1.4em;">Results of the Experiment</div>
-        <p><span style="font-size:1.3em;">The attached files describe the data of the graph in the paper.</span></p>
-        <ul>
-          <li><span style="font-size:1.3em;">Experiment 1 (Fig. 6) : [<a href="https://stlmc.github.io/info/assets/results/exp1-linear-yices.csv">exp1-linear-yices.csv</a>, <a href="https://stlmc.github.io/info/assets/results/exp1-polynomial-yices.csv">exp1-polynomial-yices.csv</a>, <a href="https://stlmc.github.io/info/assets/results/exp1-ode-dreal.csv">exp1-ode-dreal.csv</a>].</span></li>
-          <li><span style="font-size:1.3em;">Experiment 2 (Fig. 7) : [<a href="https://stlmc.github.io/info/assets/results/exp2-all-yices.csv">exp2-all-yices.csv</a>]</span></li>
-        </ul>
-        <div style="font-size: 1.3em;">We also use Z3 for linear and polynomial models. The results can be found at the attached files.
-[<a href="https://stlmc.github.io/info/assets/results/exp1-linear-z3.csv">exp1-linear-z3.csv</a>, <a href="https://stlmc.github.io/info/assets/results/exp1-polynomial-z3.csv">exp1-polynomial-z3.csv</a>, <a href="https://stlmc.github.io/info/assets/results/exp2-all-z3.csv">exp2-all-z3.csv</a>]</div>
-      </li>
-    </ul>
+    <h2 id="results">Results</h2>
+    <p><span style="font-size:1.3em;">The atached file shows benchmark model results with execution times in seconds and encoding sizes in thousands on a 16-core 32-thread Intel Xeon 2.8GHz with 256 GB memory.</span>
+<span style="font-size: 1.3em;">[<a href="https://stlmc.github.io/info/assets/pdf/results.pdf">results.pdf</a>]</span></p>
+    
   </li>
 </ul>
 
